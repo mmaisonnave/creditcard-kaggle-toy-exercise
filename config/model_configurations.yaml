@@ -1,0 +1,57 @@
+model_configuration_1:
+  model_type: 'LogisticRegression'
+  params:
+    penalty: 'l2'
+    dual: False
+    tol: 0.0001
+    C: 1.0
+    fit_intercept: True
+    intercept_scaling: 1
+    class_weight: null
+    solver: 'lbfgs'
+    max_iter: 100
+    verbose: 0
+    warm_start: False
+    n_jobs: null
+    l1_ratio: null
+
+model_configuration_2:
+  model_type: 'RandomForestClassifier'
+  params:
+    n_estimators: 100
+    criterion: 'gini'
+    max_depth: null
+    min_samples_split: 2
+    min_samples_leaf: 1
+    min_weight_fraction_leaf: 0.0
+    max_features: 'sqrt'
+    max_leaf_nodes: null
+    min_impurity_decrease: 0.0
+    bootstrap: True
+    oob_score: False
+    n_jobs: null
+    random_state: null
+    verbose: 0
+    warm_start: False
+    class_weight: null
+    ccp_alpha: 0.0
+    max_samples: null
+
+model_configuration_3:
+  model_type: "SVC"
+  params:
+    C: 1.0
+    kernel: 'rbf'
+    degree: 3
+    gamma: 'scale'
+    coef0: 0.0
+    shrinking: True
+    probability: False
+    tol: 0.001
+    cache_size: 200
+    class_weight: null
+    verbose: False
+    max_iter: -1
+    decision_function_shape: 'ovr'
+    break_ties: False
+    random_state: null

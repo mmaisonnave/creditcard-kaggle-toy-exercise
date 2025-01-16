@@ -1,0 +1,8 @@
+
+repository_path: "/Users/marianomaisonnave/Repositories/creditcard-kaggle-toy-exercise"
+credit_card_full: "data/creditcard.csv"
+credit_card_crossval_split: "data/creditcard_crossval.csv"
+credit_card_heldout_split: "data/creditcard_heldout.csv"
+model_config_path: "config/model_configurations.yaml"
+experiment_config_path:  "config/experiment_configurations.yaml"
+results_path:  "results/results.csv"

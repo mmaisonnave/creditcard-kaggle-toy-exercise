@@ -1,0 +1,5 @@
+experiment_configuration_1:
+  normalization: True
+
+experiment_configuration_2:
+  normalization: False

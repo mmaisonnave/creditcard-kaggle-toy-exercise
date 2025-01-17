@@ -8,6 +8,8 @@ from sklearn.model_selection import KFold
 import matplotlib.pyplot as plt
 from sklearn.metrics import f1_score, recall_score, precision_score, accuracy_score
 from sklearn.linear_model import LogisticRegression
+from imblearn.under_sampling import RandomUnderSampler
+
 
     # for i, col in enumerate(df.columns[:5]):
     #     fig, ax = plt.subplots(1)
@@ -70,9 +72,11 @@ def main():
             writer.writeheader()
 
         for experiment_config_name in utils.get_all_experiment_configuration_names():
+            experiment_configuration = utils._get_experiment_configuration_from_name(experiment_config_name)
             X, y = utils.matrices_from_configuration_name(experiment_config_name)
 
             for model_config_name in utils.get_all_model_config_names():
+                utils.io.info(f'Running {experiment_config_name}, {model_config_name}')
                 model = utils.model_from_config_name(model_config_name)
 
                 if already_processed(output_file, experiment_config_name, model_config_name):
@@ -80,7 +84,7 @@ def main():
                     continue
 
 
-                kf = KFold(n_splits=5)
+                kf = KFold(n_splits=3)
 
                 metrics = {
                     'f1-score': [],
@@ -91,8 +95,12 @@ def main():
 
                 for train_index, test_index in kf.split(X):
                     # Split the data
-                    X_train, X_test = X.iloc[train_index], X.iloc[test_index]
-                    y_train, y_test = y.iloc[train_index], y.iloc[test_index]
+                    X_train, X_test = X.iloc[train_index].values, X.iloc[test_index].values
+                    y_train, y_test = y.iloc[train_index].values, y.iloc[test_index].values
+
+                    if 'undersampling' in experiment_configuration and experiment_configuration['undersampling']:
+                        rus = RandomUnderSampler(random_state=42)
+                        X_train, y_train = rus.fit_resample(X_train, y_train)
 
                     model.fit(X_train, y_train)
 
@@ -100,8 +108,6 @@ def main():
                     y_pred = model.predict(X_test)
 
                     # Evaluate accuracy
-                    accuracy = accuracy_score(y_test, y_pred)
-
                     metrics['f1-score'].append(f1_score(y_test, y_pred))
                     metrics['precision'].append(precision_score(y_test, y_pred))
                     metrics['recall'].append(recall_score(y_test, y_pred))

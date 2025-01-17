@@ -3,3 +3,7 @@ experiment_configuration_1:
 
 experiment_configuration_2:
   normalization: False
+
+experiment_configuration_3:
+  normalization: True
+  undersampling: True

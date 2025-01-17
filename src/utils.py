@@ -8,7 +8,9 @@ from src import data_handler
 from sklearn.preprocessing import StandardScaler
 from src import data_handler
 import numpy as np
-
+from sklearn.ensemble import GradientBoostingClassifier
+from imblearn.ensemble import BalancedRandomForestClassifier
+from sklearn.neighbors import KNeighborsClassifier
 def get_config() -> dict:
     """
     Load and parse the configuration file.
@@ -85,8 +87,14 @@ def _model_from_config(model_config):
         return RandomForestClassifier(**model_config['params'])
     elif model_config['model_type']=='SVC':
         return SVC(**model_config['params'])
+    elif model_config['model_type']=='BalancedRandomForestClassifier':
+        return BalancedRandomForestClassifier(**model_config['params'])
+    elif model_config['model_type']=='GradientBoostingClassifier':
+        return GradientBoostingClassifier(**model_config['params'])
+    elif model_config['model_type']=='KNeighborsClassifier':
+        return KNeighborsClassifier(**model_config['params'])
     else:
-        raise ValueError(f"Unsupported model name: {model_name}")
+        raise ValueError(f"Unsupported model name: {model_config['model_type']}")
 
 def get_all_experiment_configuration_names():
     config = get_config()
